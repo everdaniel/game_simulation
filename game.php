@@ -52,6 +52,20 @@ for ($player = 1; $player <= $number_of_players; $player++) {
     ];
 }
 
+// Shuffle cards
+if ( ! shuffle($deck_of_cards)) {
+    echo "There was an error while shuffling the cards, try again!\n";
+    exit;
+}
+
+// Give cards to players
+foreach($players as &$player) {
+    $player['cards'] = array_splice($deck_of_cards, 0, 5);
+}
+
+// Determine player order
+// TODO
+
 // Main Game Control
 while (($command = readline("Enter your option or enter 'q' to quit: ")) !== 'q') {
     echo "Command is {$command}\n";
