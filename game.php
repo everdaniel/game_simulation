@@ -38,7 +38,7 @@ if ( ! is_numeric($number_of_players)) {
 }
 
 // Validate min/max number of players
-if ($number_of_players < 1 OR $number_of_players > 5) {
+if ($number_of_players < 1 OR $number_of_players > 6) {
     echo "Game only allows up to 6 players, you entered {$number_of_players}, try again!\n";
     exit;
 }
