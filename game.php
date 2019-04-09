@@ -79,7 +79,12 @@ foreach($players as &$player) {
 }
 
 // Determine player order
-// TODO
+uasort($players, function($player_a, $player_b) {
+    if ($player_a['numeric_value'] == $player_b['numeric_value'])
+        return 0;
+
+    return ($player_a['numeric_value'] < $player_b['numeric_value']) ? -1 : 1;
+});
 
 // Main Game Control
 while (($command = readline("Enter your option or enter 'q' to quit: ")) !== 'q') {
