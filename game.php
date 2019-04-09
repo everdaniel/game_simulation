@@ -60,7 +60,22 @@ if ( ! shuffle($deck_of_cards)) {
 
 // Give cards to players
 foreach($players as &$player) {
+    // Take 5 from deck
     $player['cards'] = array_splice($deck_of_cards, 0, 5);
+
+    // Calc total for given cards
+    $player['card_total'] = array_reduce($player['cards'], function($carry, $item) {
+        $carry += $item['numeric_value'];
+        return $carry;
+    });
+
+    // Sort cards
+    uasort($player['cards'], function($card_a, $card_b) {
+        if ($card_a['numeric_value'] == $card_b['numeric_value'])
+            return 0;
+
+        return ($card_a['numeric_value'] < $card_b['numeric_value']) ? 1 : -1;
+    });
 }
 
 // Determine player order
