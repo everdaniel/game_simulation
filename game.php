@@ -27,7 +27,6 @@ foreach ($pips as $index => $pip) {
     }
 }
 
-
 // Welcome Message
 echo "Welcome to this Card Game Simulation!\n";
 echo str_repeat('=', 37) . "\n";
@@ -45,7 +44,7 @@ if ($number_of_players < 2 OR $number_of_players > 6) {
     exit;
 }
 
-echo "{$number_of_players} players on the game\n\n";
+echo "{$number_of_players} players on the game\n";
 
 // "Create" players
 $players = [];
@@ -80,7 +79,7 @@ foreach($players as &$player) {
 
 // Assign main player
 $main_player = $players[0];
-echo "You are playing as " . $main_player['name'] . "\n";
+echo "\tYou are playing as " . $main_player['name'] . "\n";
 
 // Pick first player
 $first_player_number = GameHelper::decide_who_goes_first($players);
@@ -92,8 +91,8 @@ echo $first_player['name'] . " starts the game\n";
 echo "\tYour cards are " . implode(' ', array_column($main_player['cards'], 'card')) . "\n";
 
 // Play first card from deck of cards
-$first_played_card = current(array_splice($deck_of_cards, 0, 1));
-echo "First played card is " . $first_played_card['card'] . "\n";
+$played_cards[] = current(array_splice($deck_of_cards, 0, 1));
+echo "First played card is " . $played_cards[0]['card'] . "\n";
 
 // Main Game Control
 while (($command = readline("Enter your option or enter 'q' to quit: ")) !== 'q') {
