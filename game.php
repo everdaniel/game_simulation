@@ -6,6 +6,8 @@
  * Cards Visual Reference: http://www.milefoot.com/math/discrete/counting/images/cards.png
  */
 
+require_once 'vendor/autoload.php';
+
 // Suits of Cards
 $suits = ['♦', '♣', '♥', '♠'];
 
@@ -47,9 +49,10 @@ echo "{$number_of_players} players on the game\n\n";
 
 // "Create" players
 $players = [];
-for ($player = 1; $player <= $number_of_players; $player++) {
+for ($player_number = 1; $player_number <= $number_of_players; $player_number++) {
     $players[] = [
-        'name' => 'Player ' . $player,
+        'name' => 'Player ' . $player_number,
+        'number' => 'p' . $player_number,
         'cards' => []
     ];
 }
@@ -71,22 +74,26 @@ foreach($players as &$player) {
         return $carry;
     });
 
-    // Sort cards
-    uasort($player['cards'], function($card_a, $card_b) {
-        if ($card_a['numeric_value'] == $card_b['numeric_value'])
-            return 0;
-
-        return ($card_a['numeric_value'] < $card_b['numeric_value']) ? 1 : -1;
-    });
+    // Sort cards by numeric value, desc
+    array_multisort(array_column($player['cards'], 'numeric_value'), SORT_DESC, $player['cards']);
 }
 
-// Determine player order
-uasort($players, function($player_a, $player_b) {
-    if ($player_a['numeric_value'] == $player_b['numeric_value'])
-        return 0;
+// Assign main player
+$main_player = $players[0];
+echo "You are playing as " . $main_player['name'] . "\n";
 
-    return ($player_a['numeric_value'] < $player_b['numeric_value']) ? -1 : 1;
-});
+// Pick first player
+$first_player_number = GameHelper::decide_who_goes_first($players);
+$player_position = array_search($first_player_number, array_column($players, 'number'));
+$first_player = $players[$player_position];
+echo $first_player['name'] . " starts the game\n";
+
+// Show cards to the main player
+echo "\tYour cards are " . implode(' ', array_column($main_player['cards'], 'card')) . "\n";
+
+// Play first card from deck of cards
+$first_played_card = current(array_splice($deck_of_cards, 0, 1));
+echo "First played card is " . $first_played_card['card'] . "\n";
 
 // Main Game Control
 while (($command = readline("Enter your option or enter 'q' to quit: ")) !== 'q') {
