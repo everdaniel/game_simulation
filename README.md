@@ -1,3 +1,12 @@
+## Local Setup
+
+Instructions on how to setup the project locally:
+
+1. Clone the repo in your machine `git clone git@github.com:everdaniel/game_simulation.git`
+2. Go the `game_simulation` directory and run `composer install`
+3. To run the tests, run `./vendor/bin/phpunit --bootstrap vendor/autoload.php tests`
+4. To play the game, run `php game.php`
+
 ## Objective
 
 We would like you to develop a game simulation based on the rules below. Although desired, the end result does not need to be a fully working application, but we would like to see how you approach the problem even if the result is not fully functional.
