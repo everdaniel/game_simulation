@@ -12,7 +12,7 @@ require_once 'vendor/autoload.php';
 $suits = ['♦', '♣', '♥', '♠'];
 
 // Pips
-$pips = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
+$pips = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
 // Deck of Cards (Suites x Pipes)
 $deck_of_cards = [];
