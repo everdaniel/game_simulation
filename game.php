@@ -8,24 +8,8 @@
 
 require_once 'vendor/autoload.php';
 
-// Suits of Cards
-$suits = ['♦', '♣', '♥', '♠'];
-
-// Pips
-$pips = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-
-// Deck of Cards (Suites x Pipes)
-$deck_of_cards = [];
-foreach ($pips as $index => $pip) {
-    foreach($suits as $suit) {
-        $deck_of_cards[] = [
-            'card' => '[' . $suit . $pip . ']',
-            'numeric_value' => ($index + 1),
-            'suit' => $suit,
-            'pip' => $pip
-        ];
-    }
-}
+// Instantiate Cards
+$cards = new Cards();
 
 // Welcome Message
 echo "Welcome to this Card Game Simulation!\n";
@@ -56,16 +40,10 @@ for ($player_number = 1; $player_number <= $number_of_players; $player_number++)
     ];
 }
 
-// Shuffle cards
-if ( ! shuffle($deck_of_cards)) {
-    echo "There was an error while shuffling the cards, try again!\n";
-    exit;
-}
-
 // Give cards to players
 foreach($players as &$player) {
     // Take 5 from deck
-    $player['cards'] = array_splice($deck_of_cards, 0, 5);
+    $player['cards'] = $cards->take_cards();
 
     // Calc total for given cards
     $player['card_total'] = array_reduce($player['cards'], function($carry, $item) {
@@ -91,7 +69,7 @@ echo $first_player['name'] . " starts the game\n";
 echo "\tYour cards are " . implode(' ', array_column($main_player['cards'], 'card')) . "\n";
 
 // Play first card from deck of cards
-$played_cards[] = current(array_splice($deck_of_cards, 0, 1));
+$played_cards[] = $cards->play_first_card();
 echo "First played card is " . $played_cards[0]['card'] . "\n";
 
 // Main Game Control
